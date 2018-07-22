@@ -1,7 +1,7 @@
 
 const mongoose = require('mongoose');
 //custome libraries
-const UploadImageHelper = require('../helper/UploadImageHelper');
+const UploadImageHelper = require('../helper/uploadImageHelper');
 const Image = require('../models/ImageModel');
 // const Image = mongoose.model('Image');
 
