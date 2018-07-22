@@ -44,6 +44,6 @@ redirect(app);
 
 
 //server listening at 3000 port
-app.listen(3000, () => {
+app.listen(80, () => {
   console.log('server listening at 3000 port');
 });
