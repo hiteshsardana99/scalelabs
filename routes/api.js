@@ -3,7 +3,7 @@
 const express = require('express');
 const router = express.Router();
 //custome libraries
-const UploadImageController = require('../controllers/UploadImage');
+const UploadImageController = require('../controllers/uploadImage');
 
 
 //add restrictions in api
