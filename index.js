@@ -34,6 +34,7 @@ app.use(express.static('./public'));
 /* GET Home Page  */
 app.get('/', (req,res) => {
     // res.sendFile(path.join(__dirname, './views', 'index.html'));
+    console.log('home');
     res.render('home');
 });
 
