@@ -22,28 +22,37 @@ exports.register = function(req, res) {
         return res.render('register' , { msg : 'Password and confirm password not match'});
       }
 
-      bcrypt.hash(password, 10, function(err, encriptedPassword) {
-          			// Store hash in database
-          			if(err){
-            			console.log(err);
-            			return res.render('register' , { msg : 'Error'});
-          			}
-          			else{
-                  User.create({'userEmailId' : email, 'userPassword' : encriptedPassword}, function(err, resp) {
-                      if(err){
-                        console.log(err);
-                        //res.status(401).json({'status' : 100});
-                        res.render('register' , { msg : 'Error'});
-                      }
-                      else {
-                        console.log('successfully account created');
-                        // res.sendFile(path.join(__dirname, './views', 'register.html'));
-                        res.render('register' , { msg : 'successfully account created'});
-                        // res.status(201).json({'status' : 200});
-                      }
-                  });
-                }
+      User.findOne({'userEmail' : email}).then( existingUser => {
+        if(existingUser) {
+          console.log("User already exist");
+          res.render('register' , { msg : 'User already exist'});
+        }
+        else{
+          bcrypt.hash(password, 10, function(err, encriptedPassword) {
+              			// Store hash in database
+              			if(err){
+                			console.log(err);
+                			return res.render('register' , { msg : 'Error'});
+              			}
+              			else{
+                      User.create({'userEmailId' : email, 'userPassword' : encriptedPassword}, function(err, resp) {
+                          if(err){
+                            console.log(err);
+                            //res.status(401).json({'status' : 100});
+                            res.render('register' , { msg : 'Error'});
+                          }
+                          else {
+                            console.log('successfully account created');
+                            // res.sendFile(path.join(__dirname, './views', 'register.html'));
+                            res.render('register' , { msg : 'successfully account created'});
+                            // res.status(201).json({'status' : 200});
+                          }
+                      });
+                    }
+          });
+        }
       });
+
   }
   else {
       console.log('Invalid received paramters for create account');
