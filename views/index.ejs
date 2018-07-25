@@ -49,7 +49,7 @@
             <center>
               <p><%= typeof msg != 'undefined' ?  msg : '' %></p>
           </center>
-            <a href="http://localhost:3000/register">Register Here</a>
+            <a href="https://sheltered-escarpment-64025.herokuapp.com/register">Register Here</a>
 
 
           </div>
@@ -69,47 +69,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-
-  <!-- <script  type='text/javascript'>
-    $("#loginForm").submit(function(event){
-
-      var formData = {
-        'email'  :  $('input[name=email]').val(),
-        'password1' : $('input[name=password]').val()
-      }
-
-      const http = new XMLHttpRequest()
-         http.open('POST', 'http://localhost:3000/api/login', false)
-         http.setRequestHeader('Content-type', 'application/json')
-         http.send(JSON.stringify(formData)) // Make sure to stringify
-         http.onload = function() {
-           // Do whatever with response
-           alert(http.responseText)
-           // $("#name").removeAttr(value);
-           // $("#password").removeAttr(value);
-         }
-
-    });
-
-    // function login(){
-    //   const params = {
-    //         email: 'vivekgautamofficial@gmail.com',
-    //         password: 'hello'
-    //     }
-    //     const http = new XMLHttpRequest()
-    //      http.open('POST', 'http://localhost:3000/api/login')
-    //      http.setRequestHeader('Content-type', 'application/json')
-    //      http.send(JSON.stringify(params)) // Make sure to stringify
-    //      http.onload = function() {
-    //          // Do whatever with response
-    //          alert(http.responseText)
-    //      }
-    //
-    // }
-
-
-  </script>
- -->
 
 </body>
 
