@@ -35,7 +35,7 @@ exports.uploadImage = function(req,res) {
               }
               else{
                 console.log('Image uploaded and stored successfully');
-                res.render('home' , { msg : 'File uploaded!' , email : req.user , url : 'http://localhost:3000/fetchImage/' + req.file.filename })
+                res.render('home' , { msg : 'File uploaded!' , email : req.user , url : 'https://sheltered-escarpment-64025.herokuapp.com/fetchImage/' + req.file.filename })
               }
             });
           }
