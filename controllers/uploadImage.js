@@ -35,7 +35,14 @@ exports.uploadImage = function(req,res) {
               }
               else{
                 console.log('Image uploaded and stored successfully');
-                res.render('home' , { msg : 'File uploaded!' , email : req.user , url : 'https://sheltered-escarpment-64025.herokuapp.com/fetchImage/' + req.file.filename })
+                fetchImages(req,function(err,imagesResp )){
+                    if(err){
+                      res.render('home' , { msg : 'File uploaded but error in display images' , email : req.user , url : 'https://sheltered-escarpment-64025.herokuapp.com/fetchImage/' + req.file.filename, images : imagesResp  })
+                    }
+                    else{
+                      res.render('home' , { msg : 'File uploaded!' , email : req.user , url : 'https://sheltered-escarpment-64025.herokuapp.com/fetchImage/' + req.file.filename, images : imagesResp  })
+                    }
+                }
               }
             });
           }
@@ -79,7 +86,7 @@ exports.fetchImage = function(req,res) {
 }
 
 
-exports.fetchImages  = function(req,callback) {
+var fetchImages = exports.fetchImages  = function(req,callback) {
 
   if(req.isAuthenticated()) {
     //authenticated user
