@@ -19,6 +19,10 @@ const ImageSchema = new Schema({
   isSharable : {
     type : Boolean,
     default : false
+  },
+  userEmail : {
+    type : String,
+    required : true
   }
 
 });
