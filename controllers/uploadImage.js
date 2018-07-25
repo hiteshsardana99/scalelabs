@@ -35,14 +35,14 @@ exports.uploadImage = function(req,res) {
               }
               else{
                 console.log('Image uploaded and stored successfully');
-                fetchImages(req,function(err,imagesResp )){
+                fetchImages(req,function(err,imagesResp ){
                     if(err){
                       res.render('home' , { msg : 'File uploaded but error in display images' , email : req.user , url : 'https://sheltered-escarpment-64025.herokuapp.com/fetchImage/' + req.file.filename, images : imagesResp  })
                     }
                     else{
                       res.render('home' , { msg : 'File uploaded!' , email : req.user , url : 'https://sheltered-escarpment-64025.herokuapp.com/fetchImage/' + req.file.filename, images : imagesResp  })
                     }
-                }
+                });
               }
             });
           }
