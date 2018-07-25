@@ -11,10 +11,7 @@ const UserSchema = new Schema({
   userPassword : {
     type : String,
     required : true
-  },
-  uploadedImages : [{
-    type : mongoose.Schema.Types.ObjectId
-  }]
+  }
 });
 
 

@@ -17,12 +17,15 @@ exports.register = function(req, res) {
 
   if( email != null && password != null && confPassword != null && password.length > 0 && password.length > 0 && typeof email == "string" && typeof password == "string" && typeof confPassword == "string") {
 
+      email = email.toLowerCase();
+
       if(password != confPassword) {
         console.log('password and confirmPassword not match');
         return res.render('register' , { msg : 'Password and confirm password not match'});
       }
 
-      User.findOne({'userEmail' : email}).then( existingUser => {
+      User.findOne({'userEmailId' : email}).then( existingUser => {
+        console.log('check',existingUser);
         if(existingUser) {
           console.log("User already exist");
           res.render('register' , { msg : 'User already exist'});
@@ -71,6 +74,8 @@ exports.login = function(req, res) {
   var password = req.body.password;
 
   if( email != null && password != null && typeof email == "string" && typeof password == "string") {
+
+    email = email.toLowerCase();
 
     User.findOne({'userEmailId' : email}).then( existingUser => {
       if(existingUser) {
