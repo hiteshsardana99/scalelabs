@@ -88,6 +88,11 @@ router.get('/NotFound', (req,res) => {
       res.render('imageNotFound');
 });
 
+/* Logout Page */
+router.get('/logout', (req,res) => {
+  res.logout();
+  res.redirect('/login');
+});
 
 //Image route
 router.post('/uploadImage' ,  UploadImageController.uploadImage );

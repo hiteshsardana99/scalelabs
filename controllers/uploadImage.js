@@ -99,7 +99,6 @@ var fetchImages = exports.fetchImages  = function(req,callback) {
       }, {'_id' : 0 }, function(err,response) {
       if(err){
         console.log(err);
-        // res.status(400).json({'status' : 101});
         callback(err,undefined);
       }
       else{
