@@ -15,7 +15,6 @@ const passport      = require('passport');
 //custome dependencies
 const apiRoute        = require('./routes/api');
 const keys            = require('./config/keys');
-const ImageController = require('./controllers/uploadImage');
 
 //connection to database
 mongoose.connection.openUri(keys.MongoURI, { useNewUrlParser: true }, function(err, db) {

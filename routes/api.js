@@ -1,12 +1,12 @@
 
 //default libraries
-const express = require('express');
-const router = express.Router();
-const multer = require('multer');
+const express   = require('express');
+const router    = express.Router();
+const multer    = require('multer');
 //custome libraries
 const UploadImageController = require('../controllers/uploadImage');
-const UserOperations = require('../controllers/userOperations');
-
+const UserOperations        = require('../controllers/userOperations');
+const ImageController       = require('../controllers/uploadImage');
 
 //add restrictions in api
 router.use((req, res, next) => {
@@ -27,7 +27,7 @@ router.get('/', (req,res) => {
         res.redirect('/home');
     }
     else{
-      res.redirect('/index');
+      res.redirect('/login');
     }
 });
 
@@ -81,6 +81,11 @@ router.get('/home', (req,res) => {
       console.log("Unauthorized user");
       res.redirect('/login');
     }
+});
+
+/* Not Found Page */
+router.get('/NotFound', (req,res) => {
+      res.render('imageNotFound');
 });
 
 
