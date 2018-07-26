@@ -19,6 +19,71 @@ router.use((req, res, next) => {
 var upload = multer();
 
 
+
+/* GET Default Page  */
+router.get('/', (req,res) => {
+
+    if(req.isAuthenticated()) {
+        res.redirect('/home');
+    }
+    else{
+      res.redirect('/index');
+    }
+});
+
+/* Get Register Page */
+router.get('/login', (req,res) => {
+    if(req.isAuthenticated()) {
+        //need to redirect on home page
+        res.redirect('/home');
+    }
+    else{
+      //need to sign in
+      console.log('Inside login page');
+      req.logout();
+      res.render('index');
+    }
+});
+
+
+/* GET Register Page */
+router.get('/register', (req,res) => {
+  if(req.isAuthenticated()) {
+      //need to redirect on home page
+      res.redirect('/home');
+  }
+  else{
+    //need to sign in
+    console.log('Inside register page');
+    req.logout();
+    res.render('register');
+  }
+});
+
+
+/* GET Home Page */
+router.get('/home', (req,res) => {
+    // res.redirect(path.join(__dirname, './views', 'home.ejs'));
+    if(req.isAuthenticated()) {
+      ImageController.fetchImages(req, function(err,response) {
+          if(err){
+            console.log(err);
+            res.redirect('/login');
+          }
+          else{
+            console.log('display images');
+            console.log(response);
+            res.render('home', {email : req.user, images : response});
+          }
+      });
+    }
+    else{
+      console.log("Unauthorized user");
+      res.redirect('/login');
+    }
+});
+
+
 //Image route
 router.post('/uploadImage' ,  UploadImageController.uploadImage );
 //fetch signle image

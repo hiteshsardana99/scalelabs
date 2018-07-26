@@ -52,52 +52,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-/* GET Login Page  */
-app.get('/', (req,res) => {
-    // res.sendFile(path.join(__dirname, './views', 'index.html'));
-    res.render('index');
-});
-
-app.get('/login', (req,res) => {
-    // res.sendFile(path.join(__dirname, './views', 'index.html'));
-    //logout existing sessionKey
-    console.log('Inside login');
-    req.logout();
-    res.render('index');
-});
-
-
-/* GET Register Page */
-app.get('/register', (req,res) => {
-    // res.sendFile(path.join(__dirname, './views', 'register.html'));
-    res.render('register');
-});
-
-
-/* GET Home Page */
-app.get('/home', (req,res) => {
-    // res.redirect(path.join(__dirname, './views', 'home.ejs'));
-    if(req.isAuthenticated()) {
-      ImageController.fetchImages(req, function(err,response) {
-          if(err){
-            console.log(err);
-            res.redirect('/login');
-          }
-          else{
-            console.log('display images');
-            console.log(response);
-            res.render('home', {email : req.user, images : response});
-          }
-      });
-    }
-    else{
-      console.log("Unauthorized user");
-      res.redirect('/login');
-    }
-
-});
-
-
 app.use('/', apiRoute);
 
 redirect(app);
