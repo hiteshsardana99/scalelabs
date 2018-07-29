@@ -17,34 +17,36 @@
   <!-- header -->
   <br>
   <div class="container">
-    <div class="float-right"><a href="http://localhost:3000/logout">Logout</a></div><br>
+    <div class="float-right"><a href="https://sheltered-escarpment-64025.herokuapp.com/logout">Logout</a></div><br>
     <center>
       <h2>Scale Labs</h2>
       <p><%= typeof email != 'undefined' ? 'Welcome '+ email : 'Guest User' %></p>
     </center>
   <div>
       <hr></hr>
-
+      <center>
+      <p class="h6"> <%= typeof url != 'undefined' ? 'Image url : '+url : '' %></p>
+    </center>
       <br>
       <div class="container">
         <div class="row">
           <div class="col-3">
-            <form action="/uploadImage" method="POST" enctype="multipart/form-data">
+            <form name="uploadForm" action="/home" method="POST" enctype="multipart/form-data" >
               <center>
                 <h5>Select Image</h5>
               </center>
               <br>
               <div class="form-group">
-                <input type="file" class="form-control" name="myImageName" id="myImage">
+                <input type="file" class="form-control" name="myImageName" id="myImage" >
                 <%= typeof msg != 'undefined' ? msg : '' %>
               </div>
               <div class="form-group">
                 <label for="exampleInputTitle">Title</label>
-                <input type="text" class="form-control" name="title" id="exampleInputTitle" placeholder="Enter title">
+                <input type="text" class="form-control" name="title" id="exampleInputTitle" placeholder="Enter title" required>
               </div>
               <div class="form-group">
                 <label for="exampleInputDescription">Description</label>
-                <input type="text" class="form-control" name="description" id="exampleInputDescription" placeholder="Enter description">
+                <input type="text" class="form-control" name="description" id="exampleInputDescription" placeholder="Enter description" required>
               </div>
               <div class="form-check">
                 <label class="form-check-label">
@@ -58,7 +60,7 @@
               </center>
             </form>
             <br>
-            <p>  <%= typeof url != 'undefined' ? 'Image url : '+url : '' %></p>
+
 
           </div>
           <div class="col-9">
@@ -68,9 +70,14 @@
                 <%if( typeof images != 'undefined') { %>
                   <% for(var i=0; i< images.length; i++) { %>
                 <div class="col-sm-4">
-                  <p>Title : <%= images[i].imageTitle %></p>
-                  <img src="<%= 'https://sheltered-escarpment-64025.herokuapp.com/fetchImage/'+images[i].imageName %>" class="float-left" style="width:200px;height:100px;">
-                  <p>Description : <%= images[i].imageDescription %></p>
+                  <div class="card" style="width:200px;">
+                    <img class="card-img-top" src="<%= 'https://sheltered-escarpment-64025.herokuapp.com/fetchImage/'+images[i].imageName %>" alt="Card image cap" >
+                    <div class="card-body">
+                      <h5 class="card-title"><%= images[i].imageTitle %></h5>
+                      <p class="card-text"><%= images[i].imageDescription %></p>
+                      <p class="font-weight-bold"><small>Url - https://sheltered-escarpment-64025.herokuapp.com/fetchImage/<%= images[i].imageName %></small></p>
+                    </div>
+                  </div>
                 </div>
                   <% } %>
                 <% } %>
@@ -87,9 +94,10 @@
         <!-- ajax CDN -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
 
 </body>
 

@@ -12,7 +12,7 @@ const ImageController       = require('../controllers/uploadImage');
 
 //add restrictions in api
 router.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Origin', 'https://sheltered-escarpment-64025.herokuapp.com');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
     next();
@@ -75,7 +75,15 @@ router.get('/home', (req,res) => {
           else{
             console.log('display images');
             // console.log(response, req.user.userEmailId);
-            res.render('home', {email : req.user, images : response});
+            res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+            var passedMsg = req.query.valid;
+            if(passedMsg != null) {
+              res.render('home', {email : req.user, images : response, msg : passedMsg });
+            }
+            else{
+              res.render('home', {email : req.user, images : response });
+            }
+
           }
       });
     }
@@ -114,8 +122,8 @@ router.get(
     );
 
 
-//Image route
-router.post('/uploadImage' ,  UploadImageController.uploadImage );
+//Home page
+router.post('/home' ,  UploadImageController.uploadImage );
 //fetch signle image
 router.get('/fetchImage/:id' , UploadImageController.fetchImage );
 //router.get('/fetchAllUserImages', UploadImageController.fetchAllUserImages )

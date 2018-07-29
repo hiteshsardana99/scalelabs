@@ -30,15 +30,15 @@
       <div class="row">
         <div class="col-3">
           </div>
-          <div class="col-6" >
+          <div class="col-6">
             <form  id="loginForm" action="login" method="post" enctype="multipart/form-data">
               <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" name="email" id="emailInputId" aria-describedby="emailHelp" placeholder="Enter email">
+                <input type="email" class="form-control" name="email" id="emailInputId" aria-describedby="emailHelp" placeholder="Enter email" required>
               </div>
               <div class="form-group">
                 <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" name="password" id="passwordInputId" placeholder="Password">
+                <input type="password" class="form-control" name="password" id="passwordInputId" placeholder="Password" required>
               </div>
               <br>
               <center>
@@ -47,11 +47,13 @@
             </form>
             <br>
             <center>
-              <p><%= typeof msg != 'undefined' ?  msg : '' %></p>
-          </center>
+              <p class="text-danger"><%= typeof msg != 'undefined' ?  msg : '' %></p>
+
+          <hr>
+            <a href="https://sheltered-escarpment-64025.herokuapp.com/auth/google">Signin with Google</a>
+            <hr>
             <a href="https://sheltered-escarpment-64025.herokuapp.com/register">Register Here</a>
-
-
+            </center>
           </div>
           <div class="col-3">
           </div>

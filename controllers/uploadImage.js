@@ -4,20 +4,26 @@ const path = require('path');
 //custome libraries
 const UploadImageHelper = require('../helper/uploadImageHelper');
 const Image = require('../models/ImageModel');
-// const Image = mongoose.model('Image');
+
 
 exports.uploadImage = function(req,res) {
     //check whether user is authenticated of not
     if(req.isAuthenticated()) {
-      UploadImageHelper.uploadImage(req,res, (err) => {
+      UploadImageHelper.uploadImage(req,res, async (err) => {
         if(err){
           console.log('err',err);
-          res.render('home', {msg :  err});
+          var string = encodeURIComponent(err);
+          res.redirect('/home/?valid='+string)
         }
         else{
+          console.log('body',req.body);
+          //fetch images for display
+          var imagesResp = await displayImages(req);
 
           if(req.file == undefined) {
-            res.render('home' , { msg : 'Error : No File Selected!'})
+            console.log('No file Selected');
+            var string = encodeURIComponent('No file selected');
+            res.redirect('/home/?valid='+string)
           }
           else {
               var title = req.body.title;
@@ -25,7 +31,7 @@ exports.uploadImage = function(req,res) {
               var isSharable = req.body.isSharable;
               var imageName = req.file.filename;
 
-                if( title != null && des != null && isSharable != null && imageName != null ) {
+                if( title != null && des != null && imageName != null ) {
                     isSharable = (typeof req.body.isSharable ==  "undefined") ? false : true;
 
                               Image.create({
@@ -34,27 +40,22 @@ exports.uploadImage = function(req,res) {
                                 'imageDescription' : des,
                                 'userEmail' : req.user,
                                 'isSharable' : isSharable
-                                }, function(err, resp){
+                              }, async function(err, resp){
                                 if(err) {
                                   console.log(err);
-                                  res.render('home' , { msg : 'File uploaded but failed to store!', email : req.user , images : imagesResp })
+                                  var string = encodeURIComponent('File uploaded but failed to store');
+                                  res.redirect('/home/?valid='+string)
                                 }
                                 else{
                                   console.log('Image uploaded and stored successfully');
-                                  fetchImages(req,function(err,imagesResp ){
-                                      if(err){
-                                        res.render('home' , { msg : 'File uploaded but error in display images' , email : req.user , url : 'https://sheltered-escarpment-64025.herokuapp.com/fetchImage/' + req.file.filename, images : imagesResp  })
-                                      }
-                                      else{
-                                        res.render('home' , { msg : 'File uploaded!' , email : req.user , url : 'https://sheltered-escarpment-64025.herokuapp.com/fetchImage/' + req.file.filename, images : imagesResp  })
-                                      }
-                                  });
+                                  res.redirect('/home')
                                 }
                               });
                 }
                 else{
                     console.log('Imvalid parameters received for upload image');
-                    res.render('home', {msg : 'Error : Invalid paramters received' , email : req.user , images : imagesResp })
+                    var string = encodeURIComponent('Error : Invalid paramters received');
+                    res.redirect('/home/?valid='+string)
                 }
           }
         }
@@ -113,4 +114,25 @@ var fetchImages = exports.fetchImages  = function(req,callback) {
     // res.status(401).json({'status' : 101});
     callback('Unauthorized user',undefined);
   }
+}
+
+
+function displayImages(req) {
+  return new Promise(function(resolve,reject){
+    Image.find({
+      $or : [
+        {'userEmail' : req.user},
+        {'isSharable' : true}
+      ]
+      }, {'_id' : 0 }, function(err,response) {
+      if(err){
+        console.log(err);
+        reject(err);
+      }
+      else{
+        console.log('fetch all images');
+        resolve(response);
+      }
+    });
+  });
 }

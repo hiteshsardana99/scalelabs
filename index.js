@@ -40,7 +40,7 @@ app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json()); // get information from html forms
-app.use(cors());//Use cors
+app.use(cors( { origin : 'https://sheltered-escarpment-64025.herokuapp.com' } ));//Use cors
 app.set('view engine', 'ejs'); //set up ejs for templating
 
 app.use(session({
@@ -59,10 +59,9 @@ app.use('/', apiRoute);
 redirect(app);
 
 //port intialization for intializing
-//const port = process.env.PORT || 3000;
-
+const port = process.env.PORT || 80;
+ 
 //server listening at 3000 port
 app.listen(3000, () => {
-  //console.log('server listening at ', port);
-  console.log('stated');
+  console.log('server listening at ', port);
 });
