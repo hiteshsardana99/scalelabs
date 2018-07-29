@@ -2,8 +2,6 @@
 //default libraries
 const jwt       = require('jsonwebtoken');
 const bcrypt    = require('bcryptjs');
-const passport  = require('passport');
-
 //custome libraries
 const User    = require('../models/userModel');
 const keys    = require('../config/keys')
@@ -78,6 +76,11 @@ exports.login = function(req, res) {
     User.findOne({'userEmailId' : email}).then( existingUser => {
       if(existingUser) {
 
+        //account type validation
+        if(typeof existingUser.userPassword == 'undefined') {
+          return res.render('index' , { msg : 'Login with google'});
+        }
+
           bcrypt.compare(password, existingUser.userPassword, function(err, response) {
                 // res === true
                 if(err){
@@ -111,12 +114,3 @@ exports.login = function(req, res) {
   }
 
 }
-
-
-passport.serializeUser(function(userEmailId, done) {
-  done(null, userEmailId);
-});
-
-passport.deserializeUser(function(userEmailId, done) {
-    done(null, userEmailId);
-});

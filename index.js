@@ -16,6 +16,9 @@ const passport      = require('passport');
 const apiRoute        = require('./routes/api');
 const keys            = require('./config/keys');
 
+//initialize services
+require('./helper/passportService');
+
 //connection to database
 mongoose.connection.openUri(keys.MongoURI, { useNewUrlParser: true }, function(err, db) {
     if (err) {
@@ -56,9 +59,10 @@ app.use('/', apiRoute);
 redirect(app);
 
 //port intialization for intializing
-const port = process.env.PORT || 80;
+//const port = process.env.PORT || 3000;
 
 //server listening at 3000 port
-app.listen(port, () => {
-  console.log('server listening at ', port);
+app.listen(3000, () => {
+  //console.log('server listening at ', port);
+  console.log('stated');
 });

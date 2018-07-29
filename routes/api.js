@@ -3,6 +3,8 @@
 const express   = require('express');
 const router    = express.Router();
 const multer    = require('multer');
+const passport  = require('passport');
+
 //custome libraries
 const UploadImageController = require('../controllers/uploadImage');
 const UserOperations        = require('../controllers/userOperations');
@@ -63,7 +65,7 @@ router.get('/register', (req,res) => {
 
 /* GET Home Page */
 router.get('/home', (req,res) => {
-    // res.redirect(path.join(__dirname, './views', 'home.ejs'));
+    console.log('inside home page');
     if(req.isAuthenticated()) {
       ImageController.fetchImages(req, function(err,response) {
           if(err){
@@ -72,7 +74,7 @@ router.get('/home', (req,res) => {
           }
           else{
             console.log('display images');
-            console.log(response);
+            // console.log(response, req.user.userEmailId);
             res.render('home', {email : req.user, images : response});
           }
       });
@@ -90,9 +92,27 @@ router.get('/NotFound', (req,res) => {
 
 /* Logout Page */
 router.get('/logout', (req,res) => {
-  res.logout();
+  console.log('inisde logout');
+  req.logout();
+  res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
   res.redirect('/login');
 });
+
+/* Google login / sign in */
+router.get(
+    '/auth/google',
+    passport.authenticate('google',{
+      scope: ['profile', 'email']
+    })
+  );
+
+  router.get('/auth/google/callback',
+      passport.authenticate('google'),
+      (req,res) => {
+        res.redirect('/home');
+      }
+    );
+
 
 //Image route
 router.post('/uploadImage' ,  UploadImageController.uploadImage );

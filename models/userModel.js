@@ -10,8 +10,11 @@ const UserSchema = new Schema({
   },
   userPassword : {
     type : String,
-    required : true
-  }
+  },
+  signInStatus : {
+    type : Number,
+  },
+  userName : String
 });
 
 
