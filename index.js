@@ -60,8 +60,8 @@ redirect(app);
 
 //port intialization for intializing
 const port = process.env.PORT || 80;
- 
+
 //server listening at 3000 port
-app.listen(3000, () => {
+app.listen(port, () => {
   console.log('server listening at ', port);
 });
